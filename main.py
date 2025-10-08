@@ -22,7 +22,7 @@ def main():
     Player.containers = (update_group, draw_group)
     Asteroid.containers = (asteroids_group, update_group, draw_group)
     AsteroidField.containers = (update_group)
-    Shot.containers = (update_group, draw_group)
+    Shot.containers = (shots_group, update_group, draw_group)
 
     player_start_x = SCREEN_WIDTH / 2
     player_start_y = SCREEN_HEIGHT / 2
@@ -45,7 +45,14 @@ def main():
             if asteroid.has_collided(player):
                 print("Game over!")
                 return
+            
+            for shot in shots_group:
+                if asteroid.has_collided(shot):
+                    asteroid.kill()
+                    shot.kill()
+            
         
+
         # Render
         screen.fill("black")
 
